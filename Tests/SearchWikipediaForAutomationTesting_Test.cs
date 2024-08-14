@@ -6,11 +6,11 @@ using OpenQA.Selenium.Support.UI;
 
 
 // Namespace for the test project
-namespace Wikipedia_Test
+namespace Wikipedia_Testing.Tests
 {
     // TestFixture attribute indicates that this class contains NUnit tests
     [TestFixture]
-    public class WikipediaSearchTest : IDisposable
+    public class SearchWikipediaForAutomationTesting_Test : IDisposable
     {
         // ChromeDriver instance used to control the browser
         private ChromeDriver driver;
@@ -74,7 +74,7 @@ namespace Wikipedia_Test
 
             // Locate the paragraph element using the relative position of the above table element
             IWebElement textElement = driver.FindElement(RelativeBy.WithLocator(By.TagName("p")).Below(table));
-            
+
             // Assert that the paragraph element is displayed
             Assert.That(textElement.Displayed, Is.True);
 
