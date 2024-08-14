@@ -3,7 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-
+using Wikipedia_Testing.Page_Objects;
 
 // Namespace for the test project
 namespace Wikipedia_Testing.Tests
@@ -14,6 +14,9 @@ namespace Wikipedia_Testing.Tests
     {
         // ChromeDriver instance used to control the browser
         private ChromeDriver driver;
+        
+        private WikipediaHomePage homePage;
+        private WikipediaSearchResultsPage searchResultsPage;
 
         // SetUp method to run before each test
         [SetUp]
@@ -21,6 +24,9 @@ namespace Wikipedia_Testing.Tests
         {
             // Initialize the ChromeDriver instance before each test runs
             driver = new ChromeDriver();
+
+            homePage = new WikipediaHomePage(driver);
+            searchResultsPage = new WikipediaSearchResultsPage(driver);
         }
 
         // TearDown method to run after each test
@@ -45,23 +51,18 @@ namespace Wikipedia_Testing.Tests
         [Test]
         public void SearchWikipediaForAutomationTesting()
         {
-            // Navigate to Wikipedia's homepage
-            driver.Navigate().GoToUrl("https://www.wikipedia.org/");
 
-            // Locate the search box element by its ID
-            var searchBox = driver.FindElement(By.Id("searchInput"));
+            // Navigate to Wikipedia's homepage using the Page Object
+            homePage.NavigateToHomePage();
 
-            // Enter the search term "Automation testing" into the search box
-            searchBox.SendKeys("Automation testing");
-
-            // Submit the search form
-            searchBox.Submit();
+            // Perform search using the Page Object
+            homePage.Search("Automation testing");
 
             // Wait for the page to load and display the search results
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
             // Retrieve the actual title of the web page
-            var actualTitle = driver.Title;
+            var actualTitle = searchResultsPage.GetPageTitle();
 
             // Define the expected title of the search results page
             var expectedTitle = "Test automation - Wikipedia";
@@ -69,23 +70,15 @@ namespace Wikipedia_Testing.Tests
             // Assert that the actual title matches the expected title 
             Assert.That(actualTitle, Is.EqualTo(expectedTitle), $"The page title does not match the expected title. Expected: '{expectedTitle}', but was: '{actualTitle}'.");
 
-            // Locate the table element above the paragraph we need to access
-            IWebElement table = driver.FindElement(By.ClassName("box-More_footnotes_needed"));
-
-            // Locate the paragraph element using the relative position of the above table element
-            IWebElement textElement = driver.FindElement(RelativeBy.WithLocator(By.TagName("p")).Below(table));
-
-            // Assert that the paragraph element is displayed
-            Assert.That(textElement.Displayed, Is.True);
-
             // Get the text inside the praragraph element
-            var resultText = textElement.Text;
+            var resultText = searchResultsPage.GetResultText("box-More_footnotes_needed");
 
             // Define the expected text to be present in the search result
             var expectedText = "Test automation can automate some repetitive but necessary tasks in a formalized testing process";
 
             // Assert that the text displayed contains the expected text 
             Assert.That(resultText, Does.Contain(expectedText), $"The text '{expectedText}' was not found in the actual text.");
+
         }
     }
 }
