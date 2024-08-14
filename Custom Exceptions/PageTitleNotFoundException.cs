@@ -1,15 +1,12 @@
 ﻿
 namespace Wikipedia_Testing.Custom_Exceptions
 {
+    /* Custom exception class to represent a scenario where the expected page title is not found.
+       from the base CustomExceptionBase class for consistency. */
     internal class PageTitleNotFoundException : CustomExceptionBase
-    {
-        // Parameterless constructor
-        public PageTitleNotFoundException() : base() { }
-
-        // Constructor with a string message
-        public PageTitleNotFoundException(string message) : base(message) { }
-
-        // Constructor with a string message and an inner exception
-        public PageTitleNotFoundException(string message, Exception innerException) : base(message, innerException) { }
+    { 
+        public PageTitleNotFoundException() : base() { } // Default Parameterless constructor for the PageTitleNotFoundException class.
+        public PageTitleNotFoundException(string message) : base(message) { } // Constructor for the class that takes a custom error message
+        public PageTitleNotFoundException(string message, Exception innerException) : base(message, innerException) { } // Constructor for the class that takes a custom error message and an inner exception.
     }
 }

@@ -1,15 +1,12 @@
 ﻿
 namespace Wikipedia_Testing.Custom_Exceptions
 {
+    /* Custom exception class to represent navigation failures within the application.
+       Inherits from the base CustomExceptionBase class for consistency. */
     internal class NavigationException : CustomExceptionBase
     {
-        // Parameterless constructor
-        public NavigationException() : base() { }
-
-        // Constructor with a string message
-        public NavigationException(string message) : base(message) { }
-
-        // Constructor with a string message and an inner exception
-        public NavigationException(string message, Exception innerException) : base(message, innerException) { }
+        public NavigationException() : base() { } // Default Parameterless constructor for the NavigationException class
+        public NavigationException(string message) : base(message) { } // Constructor for the class that takes a custom error message
+        public NavigationException(string message, Exception innerException) : base(message, innerException) { } // Constructor for the class that takes a custom error message and an inner exception
     }
 }
