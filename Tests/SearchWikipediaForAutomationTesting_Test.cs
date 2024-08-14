@@ -51,36 +51,32 @@ namespace Wikipedia_Testing.Tests
             driver?.Dispose();
         }
 
-        // Test method with the Test attribute indicates this is a test case
-        [Test]
-        public void SearchWikipediaForAutomationTesting()
+        // Test method is Parameterized test using TestCase attribute
+        // (Less complex for this example than using something like TestCaseData in a separate method)
+        [TestCase("Automation testing", "Test automation - Wikipedia", "box-More_footnotes_needed", "Test automation can automate some repetitive but necessary tasks in a formalized testing process")]
+        [TestCase("Selenium", "Selenium (software) - Wikipedia", "box-More_footnotes_needed", "Selenium is a portable framework for testing web applications.")]
+        public void SearchWikipediaForAutomationTesting(string searchTerm, string expectedTitle, string tableClassName, string expectedText)
         {
             // Navigate to Wikipedia's homepage using the Page Object
             homePage.NavigateToHomePage();
 
             // Perform search using the Page Object
-            homePage.Search("Automation testing");
+            homePage.Search(searchTerm);
 
             // Wait for the page to load and display the search results
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
             // Retrieve the actual title of the web page
-            var actualTitle = searchResultsPage.GetPageTitle();
-
-            // Define the expected title of the search results page
-            var expectedTitle = "Test automation - Wikipedia";
+            var actualTitle = searchResultsPage.GetPageTitle(expectedTitle);
 
             // Assert that the actual title matches the expected title 
-            Assert.That(actualTitle, Is.EqualTo(expectedTitle), $"The page title does not match the expected title. Expected: '{expectedTitle}', but was: '{actualTitle}'.");
+            Assert.That(actualTitle, Is.EqualTo(expectedTitle), $"The page title does NOT match the expected title. Expected: '{expectedTitle}', but found: '{actualTitle}'.");
 
             // Get the text inside the praragraph element
-            var resultText = searchResultsPage.GetResultText("box-More_footnotes_needed");
-
-            // Define the expected text to be present in the search result
-            var expectedText = "Test automation can automate some repetitive but necessary tasks in a formalized testing process";
+            var resultText = searchResultsPage.GetResultText(tableClassName);
 
             // Assert that the text displayed contains the expected text 
-            Assert.That(resultText, Does.Contain(expectedText), $"The text '{expectedText}' was not found in the actual text.");
+            Assert.That(resultText, Does.Contain(expectedText), $"The text '{expectedText}' was NOT found in the actual text.");
 
         }
     }

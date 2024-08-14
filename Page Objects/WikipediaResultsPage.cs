@@ -21,11 +21,11 @@ namespace Wikipedia_Testing.Page_Objects
         }
 
         // Method to get the page title
-        public string GetPageTitle()
+        public string GetPageTitle(string expectedPageTitle)
         {
             // Wait for the page to load and display the search results
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            wait.Until(ExpectedConditions.TitleContains("Test automation"));
+            wait.Until(ExpectedConditions.TitleContains(expectedPageTitle));
 
             return driver.Title;
 

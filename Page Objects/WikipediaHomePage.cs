@@ -10,6 +10,9 @@ namespace Wikipedia_Testing.Page_Objects
     {
         private readonly ChromeDriver driver;
 
+        // Define the Wikipedia URL as a private constant or readonly field
+        private const string WikipediaUrl = "https://www.wikipedia.org/";
+
         // Constructor to initialize the driver
         public WikipediaHomePage(ChromeDriver driver)
         {
@@ -25,7 +28,7 @@ namespace Wikipedia_Testing.Page_Objects
         // Method to navigate to the Wikipedia homepage
         public void NavigateToHomePage()
         {
-            driver.Navigate().GoToUrl("https://www.wikipedia.org/");
+            driver.Navigate().GoToUrl(WikipediaUrl);
         }
 
         // Method to perform a search
