@@ -33,9 +33,7 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="127.0.6533.9900" />
     <PackageReference Include="SeleniumExtras.WaitHelpers" Version="1.0.2" />
   </ItemGroup>
-
   <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
-
 </Project>
