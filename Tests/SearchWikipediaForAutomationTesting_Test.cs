@@ -25,6 +25,10 @@ namespace Wikipedia_Testing.Tests
             // Initialize the ChromeDriver instance before each test runs
             driver = new ChromeDriver();
 
+            // Set an implicit wait globally for all elements
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
+            // Initilize page objects
             homePage = new WikipediaHomePage(driver);
             searchResultsPage = new WikipediaSearchResultsPage(driver);
         }
@@ -51,7 +55,6 @@ namespace Wikipedia_Testing.Tests
         [Test]
         public void SearchWikipediaForAutomationTesting()
         {
-
             // Navigate to Wikipedia's homepage using the Page Object
             homePage.NavigateToHomePage();
 
